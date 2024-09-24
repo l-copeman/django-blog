@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+import sys
 import dj_database_url
 if os.path.isfile('env.py'):
     import env
@@ -29,7 +30,7 @@ SECRET_KEY = 'django-insecure-&a*=ue2iq846!ssx!0!kx_1e$x2g*k$5i)cxj()j6neprly#nc
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['8000-lcopeman-djangoblog-q6d50fh7drl.ws-eu116.gitpod.io', '.herokuapp.com']
 
@@ -109,6 +110,9 @@ WSGI_APPLICATION = 'codestar.wsgi.application'
 DATABASES = {
     'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
 }
+
+if 'test' in sys.argv:
+    DATABASES['default']['ENGINE'] = 'django.db.backends.sqlite3'
 
 CSRF_TRUSTED_ORIGINS = [
     "https://8000-lcopeman-djangoblog-q6d50fh7drl.ws-eu116.gitpod.io",
